@@ -5,7 +5,7 @@ import logo from "../../assets/letter-v.svg";
 
 import { Container } from "./styles";
 
-export default function SignIn() {
+export default function SignUp() {
   return (
     <Container>
       <h1>VUTTR</h1>
@@ -13,16 +13,14 @@ export default function SignIn() {
 
       <div>
         <img src={logo} alt="logo" />
-        <h2>Bem-vindo!</h2>
-        <h2>Entre com seu email</h2>
 
         <form>
           <input placeholder="ex: teste@teste.com.br" />
-          <button type="button">Entrar</button>
+          <button type="button">Criar conta</button>
         </form>
       </div>
 
-      <Link to="/signup">Crie sua conta!</Link>
+      <Link to="/signin">Fazer login</Link>
     </Container>
   );
 }
