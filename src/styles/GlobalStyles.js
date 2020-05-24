@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import vBackbround from "../assets/letter-v.svg";
+// import vBackbround from "../assets/letter-v.svg";
 // import "react-toastify/dist/ReactToastify.css";
 
 export default createGlobalStyle`
@@ -16,6 +16,7 @@ export default createGlobalStyle`
   button{
     font-size: 14px;
     font-family: "Roboto", sans-serif;
+    cursor: pointer;
   }
 
   html, body, #root{
@@ -28,7 +29,7 @@ export default createGlobalStyle`
 
   body{
     font-size: 14px;
-    background: #455A64 url(${vBackbround})no-repeat 100%;
+    background-color:#ddd;
     /* background-size: cover; */
     -webkit-font-smoothing: antialiased !important;
   }

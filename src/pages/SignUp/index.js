@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../../services/api";
 
 import logo from "../../assets/letter-v.svg";
 
 import { Container } from "./styles";
 
-export default function SignUp() {
+export default function SignUp({ history }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const response = await api.post("/signup", { name, email });
+
+    console.log(response.message);
+
+    history.push("/dashboard");
+  }
+
   return (
     <Container>
       <h1>VUTTR</h1>
@@ -14,9 +28,20 @@ export default function SignUp() {
       <div>
         <img src={logo} alt="logo" />
 
-        <form>
-          <input placeholder="ex: teste@teste.com.br" />
-          <button type="button">Criar conta</button>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="name"
+            value={name}
+            placeholder="ex: Fulano"
+            onChange={(event) => setName(event.target.value)}
+          />
+          <input
+            type="email"
+            value={email}
+            placeholder="ex: teste@teste.com.br"
+            onChange={(event) => setEmail(event.target.value)}
+          />
+          <button type="submit">Criar conta</button>
         </form>
       </div>
 
