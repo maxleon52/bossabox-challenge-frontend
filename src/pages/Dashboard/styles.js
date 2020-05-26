@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import search from "../../assets/search.svg";
 import add from "../../assets/add.svg";
 import cancel from "../../assets/cancel.svg";
@@ -58,13 +59,20 @@ export const Content = styled.div`
       font-size: 18px;
     }
 
-    button {
+    .btn-remover {
       width: 75px;
       padding-left: 10px;
       border: none;
       font-size: 13px;
       background: #fff url(${cancel}) no-repeat 3px center;
       background-size: 9px;
+    }
+
+    .btn-cancel {
+      border: 1px solid;
+    }
+    .btn-cancel {
+      border: 1px solid;
     }
   }
 

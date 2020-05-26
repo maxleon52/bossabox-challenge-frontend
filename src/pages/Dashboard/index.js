@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import Modal from "../../components/Modal";
 import api from "../../services/api";
 
 import { Container, Content } from "./styles";
 
 export default function Dashboard() {
   const [tools, setTools] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   useEffect(() => {
     async function loadTools() {
       const user_id = localStorage.getItem("user");
@@ -20,6 +23,22 @@ export default function Dashboard() {
 
   return (
     <Container>
+      {isModalVisible ? (
+        <Modal>
+          <div className="confirmRemove">
+            <header>
+              <span className="title-remove">Remove tool</span>
+            </header>
+            <p>Are you sure you wont to remove hotel?</p>
+
+            <form>
+              <button className="btn-cancel">Cancelar</button>
+              <button className="btn-confirm">Sim, remover.</button>
+            </form>
+          </div>
+        </Modal>
+      ) : null}
+
       <h1>VUTTR</h1>
       <strong>Very Useful Tools to Remember</strong>
 
@@ -38,7 +57,7 @@ export default function Dashboard() {
                 <a href={tool.link} target="_blank">
                   {tool.title}
                 </a>
-                <button type="button">Remover</button>
+                <button onClick={() => setIsModalVisible(true)}>Remover</button>
               </header>
 
               <p>{tool.description}</p>
