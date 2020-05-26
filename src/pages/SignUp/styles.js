@@ -5,13 +5,13 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 25vh;
-  margin-left: 25vh;
-
-  max-width: 500px;
+  margin: 10% auto;
+  max-width: 600px;
+  padding: 16px;
+  background-color: ${darken(0.2, "#fff")};
+  border: 1px solid #fff;
 
   h1 {
-    color: #ff9800;
     font-weight: bold;
     font-size: 32px;
     margin-bottom: 15px;
@@ -21,13 +21,11 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 
     width: 276px;
     height: 232px;
-    background-color: #78909c;
+    background-color: ${darken(0.4, "#fff")};
     border: 1px solid #fff;
-    border-radius: 4px;
     margin-bottom: 16px;
 
     img {
@@ -39,7 +37,7 @@ export const Container = styled.div`
 
     h2 {
       font-size: 20px;
-      color: #455a64;
+      /* color: #455a64; */
     }
 
     form {
@@ -52,15 +50,13 @@ export const Container = styled.div`
         height: 39px;
         padding: 0 0 0 8px;
         margin-bottom: 8px;
-        border-radius: 4px;
         border: none;
         font-size: 16px;
       }
 
       button {
         height: 39px;
-        border-radius: 4px;
-        background-color: #ff9800;
+        background-color: ${darken(0.08, "#fff")};
         border: 0;
         color: #455a64;
         font-weight: bold;
@@ -69,15 +65,21 @@ export const Container = styled.div`
 
         &:hover {
           cursor: pointer;
-          background-color: ${darken(0.1, "#ff9800")};
+          background-color: ${darken(0.2, "#fff")};
         }
       }
     }
   }
 
   a {
-    color: #fff;
+    color: #8b8989;
+    font-weight: bold;
     text-decoration: none;
     font-size: 16px;
+
+    &:hover {
+      cursor: pointer;
+      color: ${darken(0.1, "#8b8989")};
+    }
   }
 `;

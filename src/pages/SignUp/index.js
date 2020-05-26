@@ -45,7 +45,7 @@ export default function SignUp({ history }) {
         </form>
       </div>
 
-      <Link to="/signin">Fazer login</Link>
+      <Link to="/">Fazer login</Link>
     </Container>
   );
 }
