@@ -51,7 +51,7 @@ export default function Dashboard() {
 
       {/* Modal of the ADD */}
       {isModalAddVisible ? (
-        <Modal>
+        <Modal onClose={() => setIsModalAddVisible(false)}>
           <div className="content-add">
             <header>
               <span className="title-add">Add new tool</span>
