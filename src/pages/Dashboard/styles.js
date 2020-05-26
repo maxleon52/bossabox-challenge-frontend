@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { darken } from "polished";
 import search from "../../assets/search.svg";
 import add from "../../assets/add.svg";
 import cancel from "../../assets/cancel.svg";
@@ -20,11 +20,23 @@ export const Container = styled.div`
     margin-bottom: 16px;
   }
 
+  div.wrapper-form {
+    display: flex;
+  }
+
+  #btn-add {
+    width: 50px;
+    height: 29px;
+    padding-left: 25px;
+    width: 90px;
+    background: #fff url(${add}) no-repeat 13px center;
+    background-size: 13px;
+  }
+
   div.wrapper-form > form {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: 18px;
 
     input {
       height: 29px;
@@ -34,13 +46,16 @@ export const Container = styled.div`
       background: #fff url(${search}) no-repeat 10px center;
       background-size: 18px;
     }
+  }
 
-    button {
-      padding-left: 15px;
-      width: 90px;
-      background: #fff url(${add}) no-repeat 13px center;
-      background-size: 15px;
-    }
+  #img-no-list {
+    margin: 36px auto;
+    width: 200px;
+    height: 200px;
+  }
+
+  #p-no-list {
+    margin: auto;
   }
 `;
 
@@ -59,20 +74,17 @@ export const Content = styled.div`
       font-size: 18px;
     }
 
-    .btn-remover {
+    #btn-remove {
       width: 75px;
       padding-left: 10px;
       border: none;
       font-size: 13px;
       background: #fff url(${cancel}) no-repeat 3px center;
       background-size: 9px;
-    }
 
-    .btn-cancel {
-      border: 1px solid;
-    }
-    .btn-cancel {
-      border: 1px solid;
+      &:hover {
+        background-color: ${darken(0.1, "#fff")};
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { darken } from "polished";
 // import vBackbround from "../assets/letter-v.svg";
 // import "react-toastify/dist/ReactToastify.css";
 
@@ -17,6 +18,9 @@ export default createGlobalStyle`
     font-size: 14px;
     font-family: "Roboto", sans-serif;
     cursor: pointer;
+    &:hover {
+        background-color: ${darken(0.1, "#fff")};
+    }
   }
 
   html, body, #root{
