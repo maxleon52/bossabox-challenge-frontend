@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
 
@@ -28,27 +28,13 @@ export default function SignIn({ history }) {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(statusCode);
-  // }, [statusCode]);
-
-  // async function handleSubmit(event) {
-  //   try {
-  //     event.preventDefault();
-
-  //     const response = await api.post("/signin", { email });
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //     console.log(error.response.data);
-  //   }
-  // }
-
   return (
     <Container>
       {statusCode !== 200 ? (
-        <div style={{ border: "1px solid red", height: "50px" }}>
-          <h1>email inválido</h1>
+        <div
+          style={{ border: "1px solid red", height: "50px", padding: "8px" }}
+        >
+          <h1>E-mail inválido</h1>
         </div>
       ) : null}
 
