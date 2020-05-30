@@ -23,6 +23,9 @@ export default function Dashboard({ history }) {
 
   const [refreshTools, setRefreshTools] = useState(true);
 
+  // Dados User
+  const [userEmail, setUserEmail] = useState();
+
   // Cria um novo cadastro de ferramenta
   async function handleSubmit(event) {
     try {
@@ -73,10 +76,23 @@ export default function Dashboard({ history }) {
     }
   }
 
+  // Sair do sistema
+  async function handleExit() {
+    try {
+      localStorage.removeItem("user");
+      localStorage.removeItem("userEmail");
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // Pegar user logado e carregar ferramentas
   useEffect(() => {
     async function loadTools() {
       const user_id = localStorage.getItem("user");
+      setUserEmail(localStorage.getItem("userEmail"));
+
       const response = await api.get("/tools", {
         headers: { user_id },
       });
@@ -200,8 +216,10 @@ export default function Dashboard({ history }) {
       <div className="profile">
         <h1>VUTTR</h1>
         <div>
-          <span>e-mail</span>
-          <span>sair</span>
+          <span>{userEmail}</span>
+          <span onClick={handleExit} style={{ cursor: "pointer" }}>
+            Sair
+          </span>
         </div>
       </div>
       <strong>Very Useful Tools to Remember</strong>

@@ -8,20 +8,22 @@ import { Container } from "./styles";
 
 export default function SignIn({ history }) {
   const [err, setErr] = useState("");
-  const [email, setEmail] = useState("");
+  const [isEmail, setIsEmail] = useState("");
   const [statusCode, setStatusCode] = useState(200);
 
   async function handleSubmit(event) {
     try {
       event.preventDefault();
 
-      const response = await api.post("/signin", { email });
+      const response = await api.post("/signin", { email: isEmail });
 
       setStatusCode(200);
 
       const { _id } = response.data;
+      const { email } = response.data;
 
       localStorage.setItem("user", _id);
+      localStorage.setItem("userEmail", email);
 
       history.push("/dashboard");
     } catch (error) {
@@ -55,8 +57,8 @@ export default function SignIn({ history }) {
           <input
             type="email"
             placeholder="ex: teste@teste.com.br"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            value={isEmail}
+            onChange={(event) => setIsEmail(event.target.value)}
           />
           <button type="submit">Entrar</button>
         </form>
