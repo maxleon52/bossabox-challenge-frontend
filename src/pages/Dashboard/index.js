@@ -13,27 +13,15 @@ export default function Dashboard({ history }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalAddVisible, setIsModalAddVisible] = useState(false);
 
-  // const [visible, setVisible] = useState(false);
-
   //Estados dos INPUTs
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
 
-  useEffect(() => {
-    async function loadTools() {
-      const user_id = localStorage.getItem("user");
-      const response = await api.get("/tools", {
-        headers: { user_id },
-      });
+  const [idDelete, setIdDelete] = useState();
 
-      setTools(response.data);
-    }
-
-    loadTools();
-  }, [tools]);
-
+  // Cria um novo cadastro de ferramenta
   async function handleSubmit(event) {
     try {
       event.preventDefault();
@@ -64,6 +52,37 @@ export default function Dashboard({ history }) {
     }
   }
 
+  // Abre modal de delete e repassa ID
+  async function handleStates(_id) {
+    setIsModalVisible(true);
+    setIdDelete(_id);
+  }
+
+  // Deleta uma ferramenta
+  async function handleDelete() {
+    try {
+      console.log(idDelete);
+      api.delete(`/tools/${idDelete}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // Pegar user logado e carregar ferramentas
+  useEffect(() => {
+    async function loadTools() {
+      const user_id = localStorage.getItem("user");
+      const response = await api.get("/tools", {
+        headers: { user_id },
+      });
+
+      setTools(response.data);
+    }
+
+    loadTools();
+  }, [tools]);
+
+  // Limpa dados do formulário de ADD
   useEffect(() => {
     setTitle("");
     setLink("");
@@ -81,7 +100,7 @@ export default function Dashboard({ history }) {
             <header>
               <span className="title-remove">Remove tool</span>
             </header>
-            <p>Are you sure you wont to remove hotel?</p>
+            <p>Deseja realmente deletar essa ferramenta?</p>
 
             <form>
               <button
@@ -90,7 +109,9 @@ export default function Dashboard({ history }) {
               >
                 Cancel
               </button>
-              <button className="btn-confirm">Yes, remove.</button>
+              <button className="btn-confirm" onClick={handleDelete}>
+                Yes, remove.
+              </button>
             </form>
           </div>
         </Modal>
@@ -187,8 +208,8 @@ export default function Dashboard({ history }) {
 
       {tools.length > 0 ? (
         tools.map((tool) => (
-          <ul>
-            <li key={tool._id}>
+          <ul key={tool._id}>
+            <li>
               <Content isVisible={isModalAddVisible}>
                 <header>
                   <a href={tool.link} target="_blank" rel="noopener noreferrer">
@@ -196,7 +217,7 @@ export default function Dashboard({ history }) {
                   </a>
                   <button
                     id="btn-remove"
-                    onClick={() => setIsModalVisible(true)}
+                    onClick={() => handleStates(tool._id)}
                   >
                     Remover
                   </button>
