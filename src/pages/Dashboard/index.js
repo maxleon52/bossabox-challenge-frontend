@@ -18,6 +18,7 @@ export default function Dashboard({ history }) {
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
   const [tags, setTags] = useState("");
+  const [searchTags, setSearchTags] = useState("");
 
   const [idDelete, setIdDelete] = useState();
 
@@ -84,6 +85,32 @@ export default function Dashboard({ history }) {
       history.push("/");
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  // Pesquisa por tags
+  async function handleSearch(event) {
+    try {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        const user_id = localStorage.getItem("user");
+
+        console.log("aqui é do localStorage: ", user_id);
+        console.log(setSearchTags);
+
+        const response = await api.get(
+          "/tools-search",
+          {
+            tag: searchTags,
+          },
+          { headers: { user_id } }
+        );
+
+        console.log(response);
+        setTools(response.data);
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
     }
   }
 
@@ -225,8 +252,14 @@ export default function Dashboard({ history }) {
       <strong>Very Useful Tools to Remember</strong>
 
       <div className="wrapper-form">
-        <form>
-          <input type="text" placeholder="pesquise por #tags" />
+        <form onSubmit={handleSearch}>
+          <input
+            type="text"
+            placeholder="pesquise por #tags"
+            value={searchTags}
+            onChange={(event) => setSearchTags(event.target.value)}
+            // onKeyPress={handleSearch}
+          />
         </form>
         <button
           id="btn-add"
