@@ -21,6 +21,8 @@ export default function Dashboard({ history }) {
 
   const [idDelete, setIdDelete] = useState();
 
+  const [refreshTools, setRefreshTools] = useState(true);
+
   // Cria um novo cadastro de ferramenta
   async function handleSubmit(event) {
     try {
@@ -28,7 +30,7 @@ export default function Dashboard({ history }) {
 
       const user_id = localStorage.getItem("user");
 
-      await api.post(
+      const response = await api.post(
         "/tools",
         {
           title,
@@ -45,6 +47,9 @@ export default function Dashboard({ history }) {
       setDescription("");
       setTags("");
       setErr("");
+
+      setTools([...tools, response.data]);
+      setRefreshTools(true);
       history.push("/dashboard");
     } catch (error) {
       console.log(error.response.data.message);
@@ -79,8 +84,10 @@ export default function Dashboard({ history }) {
       setTools(response.data);
     }
 
-    loadTools();
-  }, [tools]);
+    if (refreshTools) {
+      loadTools();
+    }
+  }, [refreshTools]);
 
   // Limpa dados do formulário de ADD
   useEffect(() => {
@@ -190,7 +197,13 @@ export default function Dashboard({ history }) {
         </Modal>
       ) : null}
 
-      <h1>VUTTR</h1>
+      <div className="profile">
+        <h1>VUTTR</h1>
+        <div>
+          <span>e-mail</span>
+          <span>sair</span>
+        </div>
+      </div>
       <strong>Very Useful Tools to Remember</strong>
 
       <div className="wrapper-form">

@@ -11,8 +11,17 @@ export const Container = styled.div`
   max-width: 500px;
   padding: 8px 0;
 
-  h1 {
-    margin-bottom: 16px;
+  .profile {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 50%;
+    }
   }
 
   strong {
