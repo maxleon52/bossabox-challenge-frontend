@@ -7,6 +7,7 @@ import logo from "../../assets/letter-v.svg";
 import { Container } from "./styles";
 
 export default function SignIn({ history }) {
+  const [err, setErr] = useState("");
   const [email, setEmail] = useState("");
   const [statusCode, setStatusCode] = useState(200);
 
@@ -25,6 +26,7 @@ export default function SignIn({ history }) {
       history.push("/dashboard");
     } catch (error) {
       setStatusCode(error.response.status);
+      setErr(error.response.data.message);
     }
   }
 
@@ -32,9 +34,12 @@ export default function SignIn({ history }) {
     <Container>
       {statusCode !== 200 ? (
         <div
-          style={{ border: "1px solid red", height: "50px", padding: "8px" }}
+          style={{
+            border: "1px solid red",
+            height: "30px",
+          }}
         >
-          <h1>E-mail inválido</h1>
+          <h1 style={{ fontSize: "18px", margin: "auto" }}>{err}</h1>
         </div>
       ) : null}
 

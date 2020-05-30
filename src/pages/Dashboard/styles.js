@@ -10,7 +10,6 @@ export const Container = styled.div`
   margin: 70px auto;
   max-width: 500px;
   padding: 8px 0;
-  /* border: 1px solid red; */
 
   h1 {
     margin-bottom: 16px;
@@ -64,6 +63,7 @@ export const Content = styled.div`
   border: 1px solid;
   margin-top: 8px;
   padding: 8px 8px;
+  display: ${(props) => (props.isVisible === true ? "none" : null)};
 
   header {
     display: flex;

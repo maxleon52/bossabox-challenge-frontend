@@ -9,12 +9,13 @@ export const Container = styled.div`
     /* justify-content: center;
     align-items: center; */
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.8);
+    overflow-x: hidden;
   }
 
   .confirmRemove {
@@ -79,7 +80,7 @@ export const Container = styled.div`
     padding: 8px;
 
     width: 570px;
-    height: 520px;
+    height: 550px;
     background-color: #fff;
 
     header {

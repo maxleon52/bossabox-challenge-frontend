@@ -8,9 +8,12 @@ import sad from "../../assets/sad.svg";
 import { Container, Content } from "./styles";
 
 export default function Dashboard({ history }) {
+  const [err, setErr] = useState("");
   const [tools, setTools] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalAddVisible, setIsModalAddVisible] = useState(false);
+
+  // const [visible, setVisible] = useState(false);
 
   //Estados dos INPUTs
   const [title, setTitle] = useState("");
@@ -29,7 +32,7 @@ export default function Dashboard({ history }) {
     }
 
     loadTools();
-  }, []);
+  }, [tools]);
 
   async function handleSubmit(event) {
     try {
@@ -48,19 +51,26 @@ export default function Dashboard({ history }) {
         { headers: { user_id } }
       );
 
-      console.log(title);
-      console.log(link);
-      console.log(description);
-      console.log(tags);
+      setIsModalAddVisible(false);
+      setTitle("");
+      setLink("");
+      setDescription("");
+      setTags("");
+      setErr("");
       history.push("/dashboard");
     } catch (error) {
-      console.log(error.response.message);
-      console.log(title);
-      console.log(link);
-      console.log(description);
-      console.log(tags);
+      console.log(error.response.data.message);
+      setErr(error.response.data.message);
     }
   }
+
+  useEffect(() => {
+    setTitle("");
+    setLink("");
+    setDescription("");
+    setTags("");
+    setErr("");
+  }, [isModalAddVisible]);
 
   return (
     <Container>
@@ -90,12 +100,30 @@ export default function Dashboard({ history }) {
       {isModalAddVisible ? (
         <Modal onClose={() => setIsModalAddVisible(false)}>
           <div className="content-add">
+            {/* Erros */}
+            {err ? (
+              <div
+                style={{
+                  height: "30px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <h1
+                  style={{ fontSize: "18px", color: "red", margin: "0 auto" }}
+                >
+                  {err}
+                </h1>
+              </div>
+            ) : null}
+
             <header>
               <span className="title-add">Add new tool</span>
             </header>
 
             <form onSubmit={handleSubmit}>
-              <label htmlFor="title">Tool Name</label>
+              <label htmlFor="title">*Tool Name</label>
               <input
                 name="title"
                 type="text"
@@ -104,7 +132,7 @@ export default function Dashboard({ history }) {
                 onChange={(event) => setTitle(event.target.value)}
               />
 
-              <label htmlFor="link">Tool Link</label>
+              <label htmlFor="link">*Tool Link</label>
               <input
                 name="link"
                 type="text"
@@ -113,7 +141,7 @@ export default function Dashboard({ history }) {
                 onChange={(event) => setLink(event.target.value)}
               />
 
-              <label htmlFor="description">Tool Description</label>
+              <label htmlFor="description">*Tool Description</label>
               <textarea
                 name="description"
                 id="input-textarea"
@@ -124,7 +152,7 @@ export default function Dashboard({ history }) {
                 onChange={(event) => setDescription(event.target.value)}
               ></textarea>
 
-              <label htmlFor="tags">Tags</label>
+              <label htmlFor="tags">*Tags</label>
               <input
                 name="tags"
                 type="text"
@@ -161,7 +189,7 @@ export default function Dashboard({ history }) {
         tools.map((tool) => (
           <ul>
             <li key={tool._id}>
-              <Content>
+              <Content isVisible={isModalAddVisible}>
                 <header>
                   <a href={tool.link} target="_blank" rel="noopener noreferrer">
                     {tool.title}
