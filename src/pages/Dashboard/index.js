@@ -91,23 +91,20 @@ export default function Dashboard({ history }) {
   // Pesquisa por tags
   async function handleSearch(event) {
     try {
-      if (event.keyCode === 13) {
+      if (event.key === "Enter") {
         event.preventDefault();
         const user_id = localStorage.getItem("user");
 
         console.log("aqui é do localStorage: ", user_id);
-        console.log(setSearchTags);
 
-        const response = await api.get(
-          "/tools-search",
-          {
-            tag: searchTags,
-          },
-          { headers: { user_id } }
-        );
+        const response = await api.get("/tools-search", {
+          headers: { user_id },
+          params: { tag: searchTags },
+        });
 
         console.log(response);
         setTools(response.data);
+        setErr(response.data.message);
       }
     } catch (error) {
       console.log(error.response.data.message);
@@ -252,15 +249,16 @@ export default function Dashboard({ history }) {
       <strong>Very Useful Tools to Remember</strong>
 
       <div className="wrapper-form">
-        <form onSubmit={handleSearch}>
+        <form>
           <input
             type="text"
             placeholder="pesquise por #tags"
             value={searchTags}
             onChange={(event) => setSearchTags(event.target.value)}
-            // onKeyPress={handleSearch}
+            onKeyPress={handleSearch}
           />
         </form>
+
         <button
           id="btn-add"
           type="button"
@@ -299,7 +297,9 @@ export default function Dashboard({ history }) {
       ) : (
         <>
           <img src={sad} alt="no-list" id="img-no-list" />
-          <p id="p-no-list">Você não tem nenhuma ferramenta cadastrada</p>
+          <p id="p-no-list" err={err}>
+            {err || "Você não tem nenhuma ferramenta cadastrada"}
+          </p>
         </>
       )}
     </Container>

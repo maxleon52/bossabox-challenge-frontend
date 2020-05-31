@@ -39,6 +39,7 @@ export default function SignIn({ history }) {
           style={{
             border: "1px solid red",
             height: "30px",
+            width: "100%",
           }}
         >
           <h1 style={{ fontSize: "18px", margin: "auto" }}>{err}</h1>

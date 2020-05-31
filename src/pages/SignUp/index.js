@@ -10,18 +10,39 @@ export default function SignUp({ history }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+  const [err, setErr] = useState("");
+  const [statusCode, setStatusCode] = useState(200);
+
   async function handleSubmit(event) {
-    event.preventDefault();
+    try {
+      event.preventDefault();
 
-    const response = await api.post("/signup", { name, email });
+      const response = await api.post("/signup", { name, email });
 
-    console.log(response.message);
+      setStatusCode(200);
 
-    history.push("/dashboard");
+      console.log(response.message);
+
+      history.push("/");
+    } catch (error) {
+      setStatusCode(error.response.status);
+      setErr(error.response.data.message);
+    }
   }
 
   return (
     <Container>
+      {statusCode !== 200 ? (
+        <div
+          style={{
+            border: "1px solid red",
+            height: "30px",
+            width: "100%",
+          }}
+        >
+          <h1 style={{ fontSize: "18px", margin: "auto" }}>{err}</h1>
+        </div>
+      ) : null}
       <h1>VUTTR</h1>
       <h1>Very Useful Tools to Remember</h1>
 
