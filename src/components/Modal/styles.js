@@ -50,7 +50,7 @@ export const Container = styled.div`
       margin-top: 20px;
     }
 
-    form {
+    .confirmRemoveBtn {
       display: flex;
       justify-content: flex-end;
       align-items: flex-end;

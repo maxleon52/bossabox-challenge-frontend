@@ -70,12 +70,29 @@ export default function Dashboard({ history }) {
   // Deleta uma ferramenta
   async function handleDelete() {
     try {
-      console.log(idDelete);
-      api.delete(`/tools/${idDelete}`);
+      const { user_id } = localStorage.getItem("user");
+      api.delete(`/tools/${idDelete}`, { headers: user_id });
+      setIsModalVisible(false);
     } catch (error) {
-      console.log(error);
+      console.log(error.response.message);
     }
   }
+
+  useEffect(() => {
+    async function loadTools() {
+      const user_id = localStorage.getItem("user");
+
+      const response = await api.get("/tools", {
+        headers: { user_id },
+      });
+
+      setTools(response.data);
+    }
+
+    if (isModalVisible === false) {
+      loadTools();
+    }
+  }, [isModalVisible]);
 
   // Sair do sistema
   async function handleExit() {
@@ -127,7 +144,11 @@ export default function Dashboard({ history }) {
     if (refreshTools) {
       loadTools();
     }
-  }, [refreshTools]);
+
+    if (isModalVisible) {
+      loadTools();
+    }
+  }, [isModalVisible, refreshTools]);
 
   // Limpa dados do formulário de ADD
   useEffect(() => {
@@ -149,7 +170,7 @@ export default function Dashboard({ history }) {
             </header>
             <p>Deseja realmente deletar essa ferramenta?</p>
 
-            <form>
+            <div className="confirmRemoveBtn">
               <button
                 className="btn-cancel"
                 onClick={() => setIsModalVisible(false)}
@@ -159,7 +180,7 @@ export default function Dashboard({ history }) {
               <button className="btn-confirm" onClick={handleDelete}>
                 Yes, remove.
               </button>
-            </form>
+            </div>
           </div>
         </Modal>
       ) : null}
